@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -19,27 +19,32 @@ namespace SingletonWebService
     {
         private HgsDataSetTableAdapters.HGSTableAdapter taHgs = new HgsDataSetTableAdapters.HGSTableAdapter();
 
-        private HgsDataSet.HGSDataTable dtHgs;
 
         [WebMethod]
-        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
-        public void GetAllHgs()
+        public bool hgsEkle(long hgsNo, long tc, string isim, string soyisim, string plaka)
         {
-            Context.Response.Write(getHgs());
+            taHgs.HgsEkle(hgsNo, tc, isim, soyisim, plaka, 0);
+            return true;
         }
 
-        private string getHgs()
-        {
-            dtHgs = taHgs.GetHgs();
 
-            string myResponse = Newtonsoft.Json.JsonConvert.SerializeObject(dtHgs);
+         [WebMethod]
+         [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+         public string hgsSorgula(int HgsID)
+         {
+             //taHgs.HgsSorgu(HgsID);
+             string myResponse = Newtonsoft.Json.JsonConvert.SerializeObject(taHgs.HgsSorgu(HgsID));
+             return myResponse;
+         }
+
+      
+        [WebMethod]
+        public string hgsSatis(decimal hgsBakiye, int HgsID, decimal tutar)
+        {
+           
+            decimal Bakiye = (hgsBakiye +tutar);
+            string myResponse = Newtonsoft.Json.JsonConvert.SerializeObject(taHgs.HgsSatis(Bakiye,HgsID));
             return myResponse;
         }
-
-        //public int hgsEkle(long hgsNo, string isim, string soyisim, string plaka, long tc)
-        //{
-        //    taHgs.HgsEkle(hgsNo, tc, isim, soyisim, plaka, 0 );
-        //    string myResponse = Newtonsoft.Json.JsonTextWriter
-        //}
     }
 }
