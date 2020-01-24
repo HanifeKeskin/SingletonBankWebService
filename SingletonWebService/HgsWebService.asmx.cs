@@ -19,7 +19,6 @@ namespace SingletonWebService
     {
         private HgsDataSetTableAdapters.HGSTableAdapter taHgs = new HgsDataSetTableAdapters.HGSTableAdapter();
 
-
         [WebMethod]
         public bool hgsEkle(long hgsNo, long tc, string isim, string soyisim, string plaka)
         {
